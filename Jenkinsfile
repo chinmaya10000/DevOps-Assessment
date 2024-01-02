@@ -1,38 +1,45 @@
-def gv
-
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
+
     stages {
-        stage("init") {
+        stage('Checkout from Git') {
             steps {
-                script {
-                    gv = load "script.groovy"
-                }
+                echo 'Clone the repo'
+                git 'https://gitlab.com/chinmaya10000/java-maven-app.git'
             }
         }
         stage("build jar") {
             steps {
                 script {
                     echo "building jar"
-                    //gv.buildJar()
+                    sh 'mvn clean package'
                 }
             }
         }
-        stage("build image") {
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo "Run SonarQube Scanner to analyze the code.."
+                    withSonarQubeEnv('sonar-server') {
+                        sh "mvn sonar:sonar"
+                    }
                 }
             }
         }
-        stage("deploy") {
+        stage("build and push image") {
             steps {
                 script {
-                    echo "deploying"
-                    //gv.deployApp()
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t chinmayapradhan/java-maven-app:1.0 ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push chinmayapradhan/java-maven-app:1.0"
+                    }
                 }
             }
         }
-    }   
+    }
 }
