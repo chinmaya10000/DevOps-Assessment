@@ -41,5 +41,23 @@ pipeline {
                 }
             }
         }
+        stage("Scan Image with Trivy"){
+            steps{
+                script {
+                    sh "trivy image chinmayapradhan/java-maven-app:1.0 > trivyimage.txt"
+                } 
+            }
+        }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploying docker image to EC2...."
+                    def dockerCmd = 'docker run -d -p 8080:8080 chinmayapradhan/java-maven-app:1.0'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.59.54.211 '${dockerCmd}'"
+                    }
+                }
+            }
+        }
     }
 }
