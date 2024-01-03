@@ -35,5 +35,12 @@ pipeline {
                 }
             }
         }
+        stage("Scan image with trivy") {
+            steps {
+                script {
+                    gv.imageScan()
+                }
+            }
+        }
     }
 }    

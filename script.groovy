@@ -18,5 +18,8 @@ def buildImage() {
         sh 'docker push chinmayapradhan/java-maven-app:2.0'
     }
 }
+def imageScan() {
+    sh 'trivy image chinmayapradhan/java-maven-app:2.0 > trivyimage.txt'
+}
 
 return this
