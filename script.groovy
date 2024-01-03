@@ -5,7 +5,7 @@ def buildJar() {
 
 def sonarqubeAnalysis() {
     echo "Run SonarQube Scanner to analyze the code.."
-    withSonarQubeEnv('Sonar-Server-10.1') {
+    withSonarQubeEnv('Sonar-Server') {
         sh "mvn sonar:sonar"
     }
 }
