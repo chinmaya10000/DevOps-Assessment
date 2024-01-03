@@ -17,8 +17,14 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    echo "building jar"
-                    sh 'mvn clean package'
+                    gv.buildJar()
+                }
+            }
+        }
+        stage("SonarQube Analysis") {
+            steps {
+                script {
+                    gv.sonarqubeAnalysis()
                 }
             }
         }
