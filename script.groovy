@@ -22,4 +22,12 @@ def imageScan() {
     sh 'trivy image chinmayapradhan/java-maven-app:2.0 > trivyimage.txt'
 }
 
+def deployImage() {
+    echo "deploy docker image to EC2.."
+    def dockerCmd = 'docker run -d -p 8080:8080 chinmayapradhan/java-maven-app:2.0'
+    sshagent(['server-ssh-key']) {
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@18.222.113.29 '${dockerCmd}'"
+    }
+}
+
 return this
