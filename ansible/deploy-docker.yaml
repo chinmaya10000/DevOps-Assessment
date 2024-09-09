@@ -52,7 +52,7 @@
   - project-vars
   tasks:
   - ansible.builtin.copy:
-      src: /docker-compose.yml
+      src: /home/ec2-user/DevOps-Assessment/ansible/docker-compose.yml
       dest: /home/ec2-user/docker-compose.yml
   - name: Docker login 
     community.docker.docker_login:
