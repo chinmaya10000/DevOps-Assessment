@@ -66,6 +66,6 @@ def deployToEnvironment(environment, serverIp, composeFile) {
     sshagent(['ec2-server-key']) {
         sh "scp server-cmds.sh ec2-user@${serverIp}:/home/ec2-user"
         sh "scp ${composeFile} ec2-user@${serverIp}:/home/ec2-user/docker-compose.yml"
-        sh "ssh -o StrictHostKeyChecking=no ec2-user@${serverIp} '${shellCmd}'"
+        sh "ssh -T -o StrictHostKeyChecking=no ec2-user@${serverIp} '${shellCmd}'"
     }
 }
