@@ -118,9 +118,15 @@ resource "aws_instance" "myapp-server" {
   tags = {
     Name: "${var.env_prefix}-server"
   }
+}
+
+resource "null_resource" "configure-server" {
+  triggers = {
+    trigger = aws_instance.myapp-server.public_ip
+  }
 
   provisioner "local-exec" {
     working_dir = "/home/ec2-user/DevOps-Assessment/ansible"
-    command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ssh_key_private} --user ec2-user deploy-docker.yaml"
+    command = "ansible-playbook --inventory ${aws_instance.myapp-server.public_ip}, --private-key ${var.ssh_key_private} --user ec2-user deploy-docker.yaml"
   }
 }
