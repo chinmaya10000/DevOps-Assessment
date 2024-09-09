@@ -1,0 +1,10 @@
+vpc_cidr_block = "10.0.0.0/16"
+subnet_cidr_block = "10.0.10.0/24"
+avail_zone = "us-east-2a"
+env_prefix = "development"
+my_ip = "3.144.76.233/32"
+public_key_location = "/root/.ssh/id_rsa.pub"
+instance_type = "t2.micro"
+ssh_key_private = "/root/.ssh/id_rsa"
+
+# terraform apply -var-file="dev.tfvars"
