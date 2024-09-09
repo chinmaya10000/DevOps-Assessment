@@ -12,7 +12,7 @@
       host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
     vars:
       ansible_connection: local
-      
+
 - name: Install Docker and Docker-Compose
   hosts: all
   become: yes
@@ -52,7 +52,7 @@
   - project-vars
   tasks:
   - ansible.builtin.copy:
-      src: ../DevOps-Assessment/docker-compose.yml
+      src: /docker-compose.yml
       dest: /home/ec2-user/docker-compose.yml
   - name: Docker login 
     community.docker.docker_login:
