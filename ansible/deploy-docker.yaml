@@ -32,12 +32,12 @@
     ansible.builtin.meta: reset_connection
 
 - name: Start Docker Container 
-  hosts: docker_server
+  hosts: all
   vars_files:
   - project-vars
   tasks:
   - ansible.builtin.copy:
-      src: /home/ec2-user/terraform/ansible/Notes-app/docker-compose.yml
+      src: ../DevOps-Assessment/docker-compose.yml
       dest: /home/ec2-user/docker-compose.yml
   - name: Docker login 
     community.docker.docker_login:

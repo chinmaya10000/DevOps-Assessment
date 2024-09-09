@@ -118,4 +118,9 @@ resource "aws_instance" "myapp-server" {
   tags = {
     Name: "${var.env_prefix}-server"
   }
+
+  provisioner "local-exec" {
+    working_dir = "/home/ec2-user/DevOps-Assessment/ansible"
+    command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ssh_key_private} --user ec2-user deploy-docker.yaml"
+  }
 }
