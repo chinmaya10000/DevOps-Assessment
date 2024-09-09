@@ -1,6 +1,6 @@
 services:
   java-maven-app:
-    image: chinmayapradhan/java-maven-app:${IMAGE_TAG}
+    image: chinmayapradhan/java-maven-app:${IMAGE_NAME}
     ports:
      - 8080:8080
   postgres:
