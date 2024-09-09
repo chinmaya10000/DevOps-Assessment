@@ -109,10 +109,10 @@ We will install a sonar scanner in the tools.
 ### Infrastructure Setup
 
 1. **Terraform Configuration**
-   - The Terraform configuration for provisioning infrastructure can be found in the `infrastructure` directory. This includes configurations for AWS VPC, subnets, security groups, and EC2 instances.
+   - The Terraform configuration for provisioning infrastructure can be found in the `terraform` directory. This includes configurations for AWS VPC, subnets, security groups, and EC2 instances.
 
 2. **Ansible Playbook**
-   - The Ansible playbook used for configuring the server and deploying Docker containers is located in the `scripts` directory. This playbook handles tasks such as installing Docker, Docker Compose, and deploying the Docker container from a `docker-compose.yml` file.
+   - The Ansible playbook used for configuring the server and deploying Docker containers is located in the `ansible` directory. This playbook handles tasks such as installing Docker, Docker Compose, and deploying the Docker container from a `docker-compose.yml` file.
 
 
 ## Monitoring
