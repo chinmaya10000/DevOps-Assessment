@@ -50,22 +50,22 @@ pipeline {
                 }
             }
         }
-        stage("deploy") {
-            environment {
-                DOCKER_CREDS = credentials('docker-hub-repo')
-            }
+        stage("Deploy to QA") {
             steps {
+                input "Proceed to QA?"
                 script {
-                    echo "deploy docker image to EC2.."
-                    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${DOCKER_CREDS_USR} ${DOCKER_CREDS_PSW}"
-                    def ec2Instance = 'ec2-user@3.138.155.130'
-                    sshagent(['ec2-server-key']) {
-                        sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
-                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ${ec2Instance}:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} '${shellCmd}'"
-                    }
+                    echo "Deploying to QA..."
+                    deployToEnvironment("qa", "3.138.155.130", "docker-compose.yml")
                 }
             }
         }
     }
-}    
+}
+def deployToEnvironment(environment, serverIp, composeFile) {
+    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${environment}"
+    sshagent(['ec2-server-key']) {
+        sh "scp server-cmds.sh ec2-user@${serverIp}:/home/ec2-user"
+        sh "scp ${composeFile} ec2-user@${serverIp}:/home/ec2-user/docker-compose.yml"
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@${serverIp} '${shellCmd}'"
+    }
+}
