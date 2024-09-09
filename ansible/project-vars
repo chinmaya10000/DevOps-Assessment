@@ -1,2 +1,2 @@
-docker_user = chinmayapradhan
-docker_password = chinu@2242
+docker_user: chinmayapradhan
+docker_password: chinu@2242
