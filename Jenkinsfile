@@ -4,7 +4,7 @@ pipeline {
         maven 'Maven'
     }
 
-    variable {
+    environment {
         IMAGE_NAME = "chinmayapradhan/java-maven-app"
         IMAGE_TAG = "1.0"
     }
