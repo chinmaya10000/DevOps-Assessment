@@ -1,51 +1,60 @@
-def gv
-
 pipeline {
     agent any
     tools {
         maven 'Maven'
     }
 
+    variable {
+        IMAGE_NAME = "chinmayapradhan/java-maven-app"
+        IMAGE_TAG = "1.0"
+    }
+
     stages {
-        stage("init") {
+        stage("Checkout from Git") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    git branch: 'master', url: 'https://github.com/chinmaya10000/DevOps-Assessment.git'
                 }
             }
         }
-        stage("build jar") {
+        stage("Build jar") {
             steps {
                 script {
-                    gv.buildJar()
+                    echo "Building the app.."
+                    sh 'mvn clean package'
                 }
             }
         }
-        stage("SonarQube Analysis") {
+        stage("Unit Test") {
             steps {
                 script {
-                    gv.sonarqubeAnalysis()
+                    sh 'mvn test'
+                }
+            }
+        }
+        stage("Integration Test") {
+            steps {
+                script {
+                    sh 'mvn verify -DskipUnitTests'
                 }
             }
         }
         stage("build and push image") {
             steps {
                 script {
-                    gv.buildImage()
-                }
-            }
-        }
-        stage("Scan image with trivy") {
-            steps {
-                script {
-                    gv.imageScan()
+                    echo "build and push the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                    }
                 }
             }
         }
         stage("deploy") {
             steps {
                 script {
-                    gv.deployImage()
+                    sh 'docker-compose up -d'
                 }
             }
         }

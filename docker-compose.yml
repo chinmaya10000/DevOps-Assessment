@@ -1,0 +1,11 @@
+services:
+  java-maven-app:
+    image: chinmayapradhan/java-maven-app:${IMAGE_TAG}
+    ports:
+     - 8080:8080
+  postgres:
+    image: postgres:13
+    ports:
+     - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=my-pwd
