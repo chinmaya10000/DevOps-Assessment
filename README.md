@@ -33,7 +33,7 @@ This repository contains a comprehensive CI/CD pipeline setup for deploying a Ja
     -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
     ``` 
 
-- Permission to jenkins to run Container
+- Docker Socket Permissions Inside a Container
    
    ```bash
    docker ps
