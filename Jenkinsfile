@@ -1,3 +1,6 @@
+#!/usr/bin/env groovy
+
+
 pipeline {
     agent any
     tools {
@@ -82,7 +85,7 @@ pipeline {
                 input "Proceed to QA?"
                 script {
                     echo "Deploying to QA..."
-                    deployToEnvironment("qa", "3.138.155.130", "docker-compose.yml")
+                    deployToEnvironment("qa", "52.14.135.171", "docker-compose.yml")
                 }
             }
         }
@@ -91,7 +94,7 @@ pipeline {
                 input "Proceed to UAT?"
                 script {
                     echo "Deploying to UAT..."
-                    deployToEnvironment("uat", "3.138.155.130", "docker-compose.yml")
+                    deployToEnvironment("uat", "52.14.135.171", "docker-compose.yml")
                 }
             }
         }
@@ -100,7 +103,7 @@ pipeline {
                 input "Proceed to Staging?"
                 script {
                     echo "Deploying to Staging..."
-                    deployToEnvironment("staging", "3.138.155.130", "docker-compose.yml")
+                    deployToEnvironment("staging", "52.14.135.171", "docker-compose.yml")
                 }
             }
         }
@@ -109,7 +112,7 @@ pipeline {
                 input "Proceed to Prod?"
                 script {
                     echo "Deploying to Prod..."
-                    deployToEnvironment("prod", "3.138.155.130", "docker-compose.yml")
+                    deployToEnvironment("prod", "52.14.135.171", "docker-compose.yml")
                 }
             }
         }

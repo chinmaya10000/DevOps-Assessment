@@ -16,7 +16,7 @@ This repository contains a comprehensive CI/CD pipeline setup for deploying a Ja
 
     ```bash
     sudo yum update -y
-    sudo yum install docker.io -y
+    sudo yum install docke -y
     sudo usermod -aG docker $USER  # Replace with your system's username, e.g., 'ec2-user'
     sudo systemctl enable --now docker
     ```
