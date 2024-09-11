@@ -59,8 +59,6 @@
       registry_url: https://index.docker.io/v1/
       username: "{{ docker_user }}"
       password: "{{ docker_password }}"
-  - name: Start Container from Compose
     ansible.builtin.shell:
       cmd: "docker-compose -f docker-compose.yml up -d"
       chdir: /home/ec2-user/
-
