@@ -54,11 +54,11 @@
   - ansible.builtin.copy:
       src: /home/ec2-user/DevOps-Assessment/ansible/docker-compose.yml
       dest: /home/ec2-user/docker-compose.yml
-  - name: Docker login 
     community.docker.docker_login:
       registry_url: https://index.docker.io/v1/
       username: "{{ docker_user }}"
       password: "{{ docker_password }}"
+  - name: Start Container from Compose
     ansible.builtin.shell:
       cmd: "docker-compose -f docker-compose.yml up -d"
       chdir: /home/ec2-user/
