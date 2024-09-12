@@ -7,9 +7,9 @@ variable subnet_cidr_block {}
 variable avail_zone {}
 variable my_ip {}
 variable env_prefix {}
-variable public_key_location {}
+# variable public_key_location {}
 variable instance_type {}
-variable ssh_key_private {}
+# variable ssh_key_private {}
 
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc_cidr_block
