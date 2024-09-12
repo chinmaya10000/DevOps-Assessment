@@ -91,18 +91,18 @@ data "aws_ami" "latest_amazon_linux" {
   }
 }
 
-output "aws_ami_id" {
+/*output "aws_ami_id" {
   value = data.aws_ami.latest_amazon_linux.id
-}
+}*/
 
 output "ec2_public_ip" {
   value = aws_instance.myapp-server.public_ip
 }
 
-resource "aws_key_pair" "ssh-key" {
+/*resource "aws_key_pair" "ssh-key" {
   key_name = "server-key"
   public_key = file(var.public_key_location)
-}
+}*/
 
 resource "aws_instance" "myapp-server" {
   ami = data.aws_ami.latest_amazon_linux.id
@@ -113,14 +113,16 @@ resource "aws_instance" "myapp-server" {
   availability_zone = var.avail_zone
   associate_public_ip_address = true
   
-  key_name = aws_key_pair.ssh-key.key_name
+  key_name = "ansible01feb_key"
+
+  user_data = file("entry-script.sh")
 
   tags = {
     Name: "${var.env_prefix}-server"
   }
 }
 
-resource "null_resource" "configure-server" {
+/*resource "null_resource" "configure-server" {
   triggers = {
     trigger = aws_instance.myapp-server.public_ip
   }
@@ -129,4 +131,4 @@ resource "null_resource" "configure-server" {
     working_dir = "/home/ec2-user/DevOps-Assessment/ansible"
     command = "ansible-playbook --inventory ${aws_instance.myapp-server.public_ip}, --private-key ${var.ssh_key_private} --user ec2-user deploy-docker.yaml"
   }
-}
+}*/
